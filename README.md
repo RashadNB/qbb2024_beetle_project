@@ -17,8 +17,10 @@ IDs of scRNA seq data from developing bone marrow: E-MTAB-9389 and ERP125305
 # Software with versions, links: 
 
 # 2-3 proposed steps, with first doable <5 hours and the other 2 being a stretch:
-Access scRNA data, visualize, organize data we need 
-Analyze B-cell to T-cell ratio from single cell data based on known markers. See if the ratios they found in control populations match ratios found in the broader literature.
+- Access scRNA data, visualize, organize data we need 
+- Analyze B-cell to T-cell ratio from single cell data based on known markers. See if the ratios they found in control populations match ratios found in the broader literature.
+- Fit RNA seq data to the reference human genome to see which genes are expressed and where SNPs are present.
+- Try to recreate the figure 1b of the paper.
 
 
 
