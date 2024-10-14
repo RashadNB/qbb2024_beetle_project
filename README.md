@@ -8,8 +8,8 @@ Geometric morphometric analysis of the pronotum and elytron in stag beetles: ins
 Our project involves analyzing shape data of the elytron and pronotum across the many species of stag beetle collected and originally analyzed by Tong et al. (2021). By first organizing and plotting the data via a generalized procrustes analysis (GPA), we can conduct statistical tests to discern the elements that vary between beetles at the family, genus, and species level.
 
 # Example published figure: 
-![Hopefully the figure shows up here :)](./paper_figure1.png)
-![Hopefully the figure shows up here too :)](./paper_figure2.png)
+![Hopefully the figure shows up here :)](./paper_figure1.jpg)
+![Hopefully the figure shows up here too :)](./paper_figure2.jpg)
 
 # Datasets with IDs, links:
 https://www.biodiversity-science.net/fileup/1005-0094/DATA/2021160.zip Landmark coordinates of samples along with sample IDs in .TPS format along with classification files in .csv format.
