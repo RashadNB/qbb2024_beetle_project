@@ -82,55 +82,67 @@ library(ggplot2)
 library(dplyr)
 library(viridisLite)
 library(viridis)
+library(plotly)
 
 tps_file <- "Pronotum.TPS"
 landmark_data <- readland.tps(tps_file, specID = "ID")  # Assuming "ID" contains the specimen IDs
 
-# Step 2: Extract the file of origin from the TPS file
+# Extract the file of origin from the TPS file
 lines <- readLines(tps_file)
 file_origin <- gsub("^Original_File_ID=", "", lines[grep("^Original_File_ID=", lines)])  # Extract file origin
 
-# Ensure the length of file_origin matches the number of specimens
-file_origin <- factor(file_origin)  # Convert to factor for grouping
+# Create a new variable for Tribe (just the file origin)
+tribe <- factor(file_origin)  # Convert to factor for grouping
 
-# Create a new variable for Tribe (you may need to define this based on your data)
-tribe <- file_origin  # Assuming Tribe is the same as file origin for this example
-
-# Step 3: Perform Procrustes alignment (GPA)
+# Perform Procrustes alignment (GPA)
 gpa_result <- gpagen(landmark_data)
 
-# Step 4: Perform PCA on the aligned shapes using geomorph's gm.prcomp
+# Perform PCA on the aligned shapes using geomorph's gm.prcomp
 pca_result <- gm.prcomp(gpa_result$coords)
 
-# Step 5: Extract the variance explained by PC1 and PC2
+# Extract the variance explained by PC1 and PC2
 explained_variance <- 100 * (pca_result$sdev^2 / sum(pca_result$sdev^2))
 
-# Step 6: Create informative axis labels
+# Create informative axis labels
 pc1_label <- paste0("PC1 (", round(explained_variance[1], 2), "% variance)")
 pc2_label <- paste0("PC2 (", round(explained_variance[2], 2), "% variance)")
 
-# Step 7: Extract PCA scores and prepare data for plotting
+# Extract PCA scores and prepare data for plotting
 pca_scores <- as.data.frame(pca_result$x)  # PCA scores from gm.prcomp
 colnames(pca_scores) <- paste0("PC", 1:ncol(pca_scores))  # Ensure column names are PC1, PC2, etc.
 pca_scores$Tribe <- tribe  # Add Tribe as a factor
 
-# Step 8: Create convex hulls for each tribe
+# Create convex hulls for each tribe
 hulls <- pca_scores %>%
   group_by(Tribe) %>%
+  filter(n() > 2) %>%  # Only keep tribes with more than two points
   slice(chull(PC1, PC2))  # Find the convex hull points
 
-# Step 9: Plot the PCA results with points colored by Tribe and filled convex hulls
-ggplot(pca_scores, aes(x = PC1, y = PC2, color = Tribe)) +
-  geom_point(size = 0.5) +  # Plot points with size 0.5
-  geom_polygon(data = hulls, aes(fill = Tribe, group = Tribe), alpha = 0.2, palette = "Set 3") +  # Convex hulls
+# PCA plot with ggplot
+pca_plot <- ggplot() +
+  geom_polygon(data = hulls, aes(x = PC1, y = PC2, fill = Tribe, group = Tribe), alpha = 0.2, show.legend = FALSE) + # Draw hulls first
+  geom_point(data = pca_scores, aes(x = PC1, y = PC2, color = Tribe, text = rownames(pca_scores)), size = 0.5) + # Then draw points on top
   labs(title = "Shape of Stag Beetle Pronota",
-       x = pc1_label,  # Use the modified PC1 label
-       y = pc2_label) +  # Use the modified PC2 label
+       x = pc1_label,
+       y = pc2_label) +
   theme_minimal() +
-  scale_color_brewer(palette = "Set3") +  # Choose a color-blind friendly palette
-  scale_fill_brewer(palette = "Set3") +    # Matching fill colors for the convex hulls
-  theme(legend.key.size = unit(3, "mm")) +  # Increase legend point size
-  guides(color = guide_legend(override.aes = list(size = 3)))  # Override the legend point size
+  scale_color_brewer(palette = "Set3") +
+  scale_fill_brewer(palette = "Set3") +
+  theme(legend.key.size = unit(3, "mm")) +
+  guides(color = guide_legend(title = "Tribe", override.aes = list(size = 3)))  # Adjust title only
+
+# Convert to interactive plot
+interactive_plot <- ggplotly(pca_plot, tooltip = "text") 
+
+# Hide hoverinfo for hulls by adjusting the traces after ggplotly
+for (i in seq_along(interactive_plot$x$data)) {
+  if (interactive_plot$x$data[[i]]$type == "scatter" && interactive_plot$x$data[[i]]$mode == "lines") {
+    interactive_plot$x$data[[i]]$hoverinfo <- "none"  # Remove tooltips for hulls
+  }
+}
+
+# Show the interactive plot
+interactive_plot
 
 #################################################
 #Plotting individual sample shapes 
@@ -171,9 +183,9 @@ extract_landmarks <- function(tps_file, sample_id) {
 
 # Specify the TPS file and the sample ID you want to plot
 tps_file <- "Pronotum.TPS"
-sample_id <- "10"  # Change this to the ID of the sample you want to plot
+sample_id <- "1223"  # Change this to the ID of the sample you want to plot
 
-# Step 1: Extract landmarks for the specific sample
+# Extract landmarks for the specific sample
 sample_landmarks <- extract_landmarks(tps_file, sample_id)
 
 # Check if landmarks were successfully extracted
@@ -181,10 +193,10 @@ if (is.null(sample_landmarks)) {
   stop("No landmarks found for the specified sample ID.")
 }
 
-# Step 2: Create a data frame for plotting
+# Create a data frame for plotting
 landmark_df <- data.frame(x = sample_landmarks[, 1], y = sample_landmarks[, 2])
 
-# Step 3: Plot the shape using ggplot2
+# Plot the shape using ggplot2
 ggplot(landmark_df, aes(x = x, y = y)) +
   geom_point(size = 1) +  # Plot the landmarks
   geom_path(size = 1, color = "blue") +  # Connect the landmarks
