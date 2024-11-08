@@ -4,7 +4,7 @@
 # Progress since last submission
 - Pushed organized data (Pronotum.TPS + Elytron.TPS) to github along with the code involved in organizing it (Protum_workflow.R + Elytron_workflow.R).
 - Ran GPA and generated PCA plots for elytron and pronotum:
-![Hopefully the figure shows up here :)](./Pronotum_plot.png)
+![Hopefully the figure shows up here :)](/Users/cmdb/Desktop/qbb_project/Project_work/Pronotum/Pronotum_plot.png)
 ![Hopefully the figure shows up here too :)](./Elytron_plot.png)
 
 # Project organization
