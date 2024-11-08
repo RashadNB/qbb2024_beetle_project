@@ -4,8 +4,8 @@
 # Progress since last submission
 - Pushed organized data (Pronotum.TPS + Elytron.TPS) to github along with the code involved in organizing it (Protum_workflow.R + Elytron_workflow.R).
 - Ran GPA and generated PCA plots for elytron and pronotum:
-![Hopefully the figure shows up here :)](/Users/cmdb/Desktop/qbb_project/Project_work/Pronotum/Pronotum_plot.png)
-![Hopefully the figure shows up here too :)](./Elytron_plot.png)
+![Hopefully the figure shows up here :)](../Project_work/Pronotum/Pronotum_plot.png)
+![Hopefully the figure shows up here too :)](../Project_work/Elytron/Elytron_plot.png)
 
 # Project organization
 - With GPAs run and PCAs made we can run statistical tests like ANOVA to detect significant differences in shape across different groups of beetles. We can also cross-reference our results with a phylogeny to see what patterns or interesting data emerge.
