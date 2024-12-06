@@ -1,6 +1,9 @@
 Checkin 11-22-24
 # Progress since last submission
 - - pushed generated figures for Morphological Disparity (Shape Diversity) by Tribe for Elytron and Pronotum from master files generated for checkin in 1. 
+![Hopefully the figure shows up here too :)](![Pronotum Morphological Disparity by Tribe](https://github.com/user-attachments/assets/fc7eb1a5-247a-4b8c-b8ec-3bc56f229285)
+
+![Elytron Morphological Disparity by Tribe](https://github.com/user-attachments/assets/f461e902-befd-449e-90a5-f298efdd2905)
 
 - - We then looked at the different tribes pronotums in terms of landmark contributions to morphological disparity. This provides insight into which groups have the most diversity in pronotum, which could provide evolutionary insights. 
 
