@@ -3,7 +3,7 @@ Recapitulating differences in the shape of exoskeletal elements across stag beet
 
 ## Paper title
 Geometric morphometric analysis of the pronotum and elytron in stag beetles: insight into its diversity and evolution: https://doi.org/10.3897/zookeys.833.26164 
-![Pronotum & elytron figure](/OG_Paper/beetle_pic.jpg)
+![Pronotum & elytron figure](/OG_Paper/E&P.png)
 
 ## Description: 
 Our project involves analyzing shape data of the elytron and pronotum across the many species of stag beetle collected and originally analyzed by Tong et al. (2021). By first organizing and plotting the data via a generalized procrustes analysis (GPA), we can conduct statistical tests to discern the elements that vary between beetles at the family, genus, and species level.
